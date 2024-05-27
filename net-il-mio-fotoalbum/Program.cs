@@ -1,3 +1,5 @@
+using net_il_mio_fotoalbum.Data;
+
 namespace net_il_mio_fotoalbum
 {
     public class Program
@@ -28,7 +30,9 @@ namespace net_il_mio_fotoalbum
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Photo}/{action=Index}/{id?}");
+
+            PhotoManager.Seed();
 
             app.Run();
         }
