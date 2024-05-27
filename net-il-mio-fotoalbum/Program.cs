@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using net_il_mio_fotoalbum.Data;
 
 namespace net_il_mio_fotoalbum
@@ -10,6 +11,10 @@ namespace net_il_mio_fotoalbum
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
+            builder.Logging.AddFile("Logs/myapp-{Date}.txt");
 
             var app = builder.Build();
 

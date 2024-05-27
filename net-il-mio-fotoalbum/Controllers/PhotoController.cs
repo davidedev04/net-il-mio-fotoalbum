@@ -67,36 +67,58 @@ namespace net_il_mio_fotoalbum.Controllers
         [HttpGet]
         public ActionResult Update(int id)
         {
-            return View();
+            var photo = PhotoManager.GetPhoto(id);
+            if (photo == null)
+                return NotFound();
+            PhotoFormModel model = new PhotoFormModel(photo);
+            model.CreateCategories();
+            return View(model);
         }
 
         // POST: PhotoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(int id, IFormCollection collection)
+        public ActionResult Update(int id,PhotoFormModel model)
         {
-            try
+            if (ModelState.IsValid == false)
             {
-                return RedirectToAction(nameof(Index));
+                // Ritorno la form di prima con i dati della pizza
+                // precompilati dall'utente
+                model.CreateCategories();
+                return View("Update", model);
             }
-            catch
+
+            var modified = PhotoManager.UpdatePhoto(id, model.Photo, model.SelectedCategories);
+            if (modified)
             {
-                return View();
+                // Richiamiamo la action Index affinché vengano mostrate tutte le pizze
+                return RedirectToAction("Index");
             }
+            else
+                return NotFound();
         }
 
         // POST: PhotoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
+            using (PhotoContext context = new PhotoContext())
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                Photo photoToDelete = context.Foto.Where(photo => photo.Id == id).FirstOrDefault();
+
+                if (photoToDelete != null)
+                {
+                    context.Foto.Remove(photoToDelete);
+
+                    context.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
         }
 

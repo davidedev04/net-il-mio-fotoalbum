@@ -3,6 +3,14 @@ using net_il_mio_fotoalbum.Models;
 
 namespace net_il_mio_fotoalbum.Data
 {
+
+    public enum ResultType
+    {
+        OK,
+        Exception,
+        NotFound
+    }
+
     public class PhotoManager
     {
         public static int CountAllPhotos()
@@ -37,7 +45,7 @@ namespace net_il_mio_fotoalbum.Data
             return db.Foto.FirstOrDefault(p => p.Id == id);
         }
 
-        public static void InsertPhoto(Photo photo, List<string> SelectedCategories)
+        public static void InsertPhoto(Photo photo, List<string> SelectedCategories = null)
         {
             using PhotoContext db = new PhotoContext();
             photo.Categories = new List<Category>();
@@ -60,6 +68,44 @@ namespace net_il_mio_fotoalbum.Data
 
             db.Foto.Add(photo);
             db.SaveChanges();
+        }
+
+        public static bool UpdatePhoto(int id, Photo photo, List<string> SelectedCategories)
+        {
+            try
+            {
+                // Non posso riusare GetPizza()
+                // perché il DbContext deve continuare a vivere
+                // affinché possa accorgersi di quali modifiche deve salvare
+                using PhotoContext db = new PhotoContext();
+                var fotoDaModificare = db.Foto.Where(p => p.Id == id).Include(p => p.Categories).FirstOrDefault();
+                if (fotoDaModificare == null)
+                    return false;
+                fotoDaModificare.Title = photo.Title;
+                fotoDaModificare.Description = photo.Description;
+                fotoDaModificare.Image = photo.Image;
+                fotoDaModificare.Visible = photo.Visible;
+
+                // Prima svuoto così da salvare solo le informazioni che l'utente ha scelto, NON le aggiungiamo ai vecchi dati
+                fotoDaModificare.Categories.Clear();
+                if (SelectedCategories != null)
+                {
+                    foreach (var category in SelectedCategories)
+                    {
+                        int categoryId = int.Parse(category);
+                        var categoryFromDb = db.Category.FirstOrDefault(x => x.Id == categoryId);
+                        if (categoryFromDb != null)
+                            fotoDaModificare.Categories.Add(categoryFromDb);
+                    }
+                }
+
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public static void Seed()

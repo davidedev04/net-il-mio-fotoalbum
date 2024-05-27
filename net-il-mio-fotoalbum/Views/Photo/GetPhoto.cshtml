@@ -8,6 +8,18 @@
             <h5 class="card-title text-center">@Model.Title</h5>
             <p class="card-text text-center">@Model.Description</p>
             <h4 class="card-text text-center">Visibile: @(Model.Visible ? "Si" : "No")</h4>
+            <div class="card-text text-center">
+                Categorie:
+                <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                    @foreach (var categoria in Model.Categories)
+                    {
+                        <div style="background-color: #AAAAAA; display: flex; justify-content: center; align-items: center;
+                            border-radius: 3px; border-style: solid; border-color: #AAAAAA; padding: 2px;">
+                            @categoria.Name
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
         <a href="@Url.Action("Index", "Photo")" class="btn btn-primary">BACK</a>
     </div>

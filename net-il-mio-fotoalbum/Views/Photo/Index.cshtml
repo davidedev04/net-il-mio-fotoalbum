@@ -15,16 +15,13 @@
                 <p class="card-text text-center">@photo.Description</p>
                 <h4 class="card-text text-center">Visibile: @(photo.Visible ? "Si" : "No")</h4>
                 <a href="@Url.Action("GetPhoto", "Photo", new { id = photo.Id } )" style="width: 70%;" class="btn btn-primary">DETTAGLI</a>
-                @* @if (User.IsInRole("ADMIN"))
-                {
-                    <a href="@Url.Action("Update", "Pizza", new { id = pizza.Id } )" style="width: 70%;" class="btn btn-warning my-2">MODIFICA</a>
-                    <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post" style="width: 100%" class="d-flex justify-content-center align-items-center">
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger" style="width: 70%">
-                            CANCELLA
-                        </button>
-                    </form>
-                } *@
+                <a href="@Url.Action("Update", "Photo", new { id = photo.Id } )" style="width: 70%;" class="btn btn-warning my-2">MODIFICA</a>
+                <form asp-controller="Photo" asp-action="Delete" asp-route-id="@photo.Id" method="post" style="width: 100%" class="d-flex justify-content-center align-items-center">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger" style="width: 70%">
+                        CANCELLA
+                    </button>
+                </form>
             </div>
         </div>
 
