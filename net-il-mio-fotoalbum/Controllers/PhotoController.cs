@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using net_il_mio_fotoalbum.Data;
 using net_il_mio_fotoalbum.Models;
@@ -6,6 +7,8 @@ using System.Diagnostics;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
+
+    [Authorize(Roles = "ADMIN,USER")]
     public class PhotoController : Controller
     {
 
