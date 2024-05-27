@@ -6,14 +6,19 @@ namespace net_il_mio_fotoalbum.Models
     public class Photo
     {
         [Key] public int Id { get; set; }
+
         [Required(ErrorMessage = "Il campo é richiesto")]
         [StringLength(50, ErrorMessage = "Il campo deve contenere massimo 50 caratteri")]
         public string Title { get; set; }
+
         [Required(ErrorMessage = "Il campo é richiesto")]
         [StringLength(300, ErrorMessage = "Il campo deve contenere masssimo 50 caratteri")]
         public string Description { get; set; }
+
         [Required(ErrorMessage = "Il campo é richiesto")]
         public string Image { get; set; }
+
+        [Required(ErrorMessage = "Il campo é richiesto")]
         public bool Visible { get; set; }
 
         public List<Category>? Categories { get; set; }
