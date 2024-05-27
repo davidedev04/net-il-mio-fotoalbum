@@ -1,5 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using net_il_mio_fotoalbum.Data
+@model PhotoFormModel
+
+<div class="container p-3" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+    <form asp-controller="Photo" asp-action="Create" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <strong>Nome:</strong>
+            <input asp-for="Photo.Title" class="d-block w-100" />
+            <span asp-validation-for="Photo.Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <strong>Descrizione:</strong>
+            <input asp-for="Photo.Description" class="d-block w-100" />
+            <span asp-validation-for="Photo.Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <strong>Visibilità:</strong>
+            <input asp-for="Photo.Visible" type="text" class="d-block w-100" />
+            <span asp-validation-for="Photo.Visible" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <strong>Immagine:</strong>
+            <input asp-for="Photo.Image" type="url" class="d-block w-100" />
+        </div>
+        <div class="mb-3">
+            <strong>Categorie:</strong>
+            @for (int i = 0; i < Model.categories.Count; i++)
+            {
+                <div>
+                    <input type="checkbox" name="SelectedCategories" value="@Model.categories[i].Value"
+                    @(Model.SelectedCategories.Contains(Model.categories[i].Value) ? "checked" : "") />
+                    @Model.categories[i].Text
+                </div>
+            }
+        </div>
+        <div class="text-end">
+            <input type="submit" class="btn btn-small btn-info" value="AGGIUNGI">
+        </div>
+        </form>

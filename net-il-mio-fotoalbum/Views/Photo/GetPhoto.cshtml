@@ -1,5 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using net_il_mio_fotoalbum
+@model Photo
+
+<div class="d-flex justify-content-center align-items-center">
+    <div class="card align-items-center py-2" style="width: 70vw;">
+        <img src="@Model.Image" class="card-img-top" alt="@Model.Title" style="width: 50%">
+        <div class="card-body">
+            <h5 class="card-title text-center">@Model.Title</h5>
+            <p class="card-text text-center">@Model.Description</p>
+            <h4 class="card-text text-center">Visibile: @(Model.Visible ? "Si" : "No")</h4>
+        </div>
+        <a href="@Url.Action("Index", "Photo")" class="btn btn-primary">BACK</a>
+    </div>
+</div>

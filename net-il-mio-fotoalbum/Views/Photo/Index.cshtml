@@ -1,6 +1,8 @@
 ﻿@using net_il_mio_fotoalbum
 @model List<Photo>
 
+<a href="@Url.Action("Create", "Photo")" class="btn btn-primary">AGGIUNGI FOTO</a>
+
 <div class="d-flex justify-content-center align-items-center flex-wrap">
 
     @foreach (var photo in Model)
@@ -11,8 +13,8 @@
             <div class="card-body d-flex flex-column align-items-center" style="width: 100%">
                 <h2 class="card-title text-center">@photo.Title</h2>
                 <p class="card-text text-center">@photo.Description</p>
-                <h4 class="card-text text-center">@photo.Visible</h4>
-                @* <a href="@Url.Action("GetPizza", "Pizza", new { id = pizza.Id } )" style="width: 70%;" class="btn btn-primary">DETTAGLI</a> *@
+                <h4 class="card-text text-center">Visibile: @(photo.Visible ? "Si" : "No")</h4>
+                <a href="@Url.Action("GetPhoto", "Photo", new { id = photo.Id } )" style="width: 70%;" class="btn btn-primary">DETTAGLI</a>
                 @* @if (User.IsInRole("ADMIN"))
                 {
                     <a href="@Url.Action("Update", "Pizza", new { id = pizza.Id } )" style="width: 70%;" class="btn btn-warning my-2">MODIFICA</a>
