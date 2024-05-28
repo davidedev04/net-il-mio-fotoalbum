@@ -13,13 +13,25 @@
                 </div>
             </div>
         </div>
-        <div class="row js_no_post d-none">
+        <div class="row js_no_photo d-none">
             <div class="col">
                 <h3>Non hai inserito alcuna foto</h3>
             </div>
         </div>
-        <div class="row js_post_table d-none">
+        <div class="row js_photo_table d-none d-flex justify-content-center align-items-center">
         </div>
+        <div class="my-3">
+            <label for="exampleFormControlInput1" class="form-label">Email</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Messaggio</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="text-end">
+            <input type="submit" class="btn btn-small btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" value="INVIA">
+        </div>
+
     </div>
 }﻿
 
@@ -36,24 +48,24 @@
                 }
             }).then((res) => {
                 if (res.data.length == 0) {
-                    document.querySelector('.js_no_post').classList.remove('d-none');
-                    document.querySelector('.js_post_table').classList.add('d-none');
+                    document.querySelector('.js_no_photo').classList.remove('d-none');
+                    document.querySelector('.js_photo_table').classList.add('d-none');
                 }
                 else {
-                    document.querySelector('.js_no_post').classList.add('d-none');
-                    var photoTable = document.querySelector('.js_post_table');
+                    document.querySelector('.js_no_photo').classList.add('d-none');
+                    var photoTable = document.querySelector('.js_photo_table');
                     photoTable.classList.remove('d-none');
 
                     photoTable.innerHTML = '';
                     res.data.forEach((photo) => {
                         console.log(photo);
                         photoTable.innerHTML += `
-                                    <div class="card">
-                                                <div class="card-image"><img src="${photo.image}" alt="${photo.title}" style="object-fit: cover; width: 100%; height: 100%"></div>
-                                        <div class="category">${photo.title}</div>
-                                        <div class="heading">${photo.description}
-                                        </div>
-                                    </div>`;
+                                        <div class="card">
+                                                    <div class="card-image rounded"><img src="${photo.image}" alt="${photo.title}" class="rounded" style="object-fit: cover; width: 100%; height: 100%"></div>
+                                            <div class="category">${photo.title}</div>
+                                            <div class="heading">${photo.description}
+                                            </div>
+                                        </div>`;
                     });
                 }
             });
@@ -68,6 +80,7 @@
     }
 
     document.querySelector('.js_search').addEventListener('keyup', search)
+
 </script>
 
 <style>
@@ -120,11 +133,11 @@
     }
 
         .card-image:hover {
+            cursor: pointer;
             transform: scale(0.98);
         }
 
     .category {
-        text-transform: uppercase;
         font-size: 1.2em;
         font-weight: 600;
         color: rgb(63, 121, 230);

@@ -28,6 +28,15 @@ namespace net_il_mio_fotoalbum.Controllers
             return Ok(photo);
         }
 
+        [HttpGet("{name}")]
+        public IActionResult GetPhotoByName(string name) // PATH PARAM https://.../api/Postwebapi/getPostbyTitle/post1
+        {
+            var Photo = PhotoManager.GetPhotosByName(name);
+            if (Photo == null)
+                return NotFound("ERRORE");
+            return Ok(Photo);
+        }
+
         [HttpPost]
         public IActionResult CreatePhoto([FromBody] Photo photo)
         {

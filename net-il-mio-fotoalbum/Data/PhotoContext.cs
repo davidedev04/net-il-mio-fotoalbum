@@ -9,6 +9,7 @@ namespace net_il_mio_fotoalbum.Data
     {
         public DbSet<Photo> Foto {  get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<Message> Message { get; set; }
 
         public const string CONNECTION_STRING = "Data Source=localhost;Initial Catalog=albumfotografico;Integrated Security=True;TrustServerCertificate=True";
 
