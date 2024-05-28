@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using net_il_mio_fotoalbum.Models;
+using Serilog.Context;
 
 namespace net_il_mio_fotoalbum.Data
 {
@@ -29,6 +30,19 @@ namespace net_il_mio_fotoalbum.Data
         {
             using PhotoContext db = new PhotoContext();
             return db.Category.ToList();
+        }
+
+        public static Photo GetPhotoByName(string name)
+        {
+            using PhotoContext db = new PhotoContext();
+            return db.Foto.FirstOrDefault(p => p.Title == name);
+        }
+
+        public static List<Photo> GetPhotosByName(string name)
+        {
+            using PhotoContext db = new PhotoContext();
+
+            return db.Foto.Where(x => x.Title.ToLower().Contains(name.ToLower())).ToList();
         }
 
         public static Category GetCategoryById(int id)
@@ -106,6 +120,20 @@ namespace net_il_mio_fotoalbum.Data
             {
                 return false;
             }
+        }
+
+        public static bool DeletePhoto(int id)
+        {
+            using PhotoContext db = new PhotoContext();
+            var photo = db.Foto.FirstOrDefault(p => p.Id == id);
+
+            if (photo == null)
+                return false;
+
+            db.Foto.Remove(photo);
+            db.SaveChanges();
+
+            return true;
         }
 
         public static void Seed()
