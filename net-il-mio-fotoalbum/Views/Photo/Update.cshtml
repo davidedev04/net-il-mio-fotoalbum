@@ -1,6 +1,8 @@
 ﻿@using net_il_mio_fotoalbum.Data
 @model PhotoFormModel
 
+<link rel="stylesheet" href="~/css/crudAdmin.css" />
+
 @if (User.IsInRole("ADMIN"))
 {
     <div class="container p-3" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
@@ -16,10 +18,14 @@
                 <input asp-for="Photo.Description" class="d-block w-100" />
                 <span asp-validation-for="Photo.Description" class="text-danger"></span>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 d-flex align-items-center">
                 <strong>Visibilità:</strong>
-                <input asp-for="Photo.Visible" type="checkbox" class="d-block w-100" />
-                <span asp-validation-for="Photo.Visible" class="text-danger"></span>
+                <label class="switch ms-2">
+                    <input asp-for="Photo.Visible" type="checkbox" class="checkbox">
+                    <div class="slider"></div>
+                    <span asp-validation-for="Photo.Visible" class="text-danger"></span>
+                </label>
+
             </div>
             <div class="mb-3">
                 <strong>Immagine:</strong>
@@ -29,9 +35,17 @@
                 <strong>Categorie:</strong>
                 @for (int i = 0; i < Model.categories.Count; i++)
                 {
-                    <div>
-                        <input type="checkbox" name="SelectedCategories" value="@Model.categories[i].Value"
-                        @(Model.SelectedCategories.Contains(Model.categories[i].Value) ? "checked" : "") />
+                    @* <div>
+            <input type="checkbox" name="SelectedCategories" value="@Model.categories[i].Value"
+            @(Model.SelectedCategories.Contains(Model.categories[i].Value) ? "checked" : "") />
+            @Model.categories[i].Text
+            </div> *@
+                    <div class="content d-flex">
+                        <label class="checkBox mb-2 me-2">
+                            <input id="ch1" type="checkbox" name="SelectedCategories" value="@Model.categories[i].Value"
+                            @(Model.SelectedCategories.Contains(Model.categories[i].Value) ? "checked" : "") />
+                            <div class="transition"></div>
+                        </label>
                         @Model.categories[i].Text
                     </div>
                 }
@@ -42,4 +56,3 @@
         </form>
     </div>
 }
-

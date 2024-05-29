@@ -12,7 +12,7 @@
         </div>
         <div class="row js_no_photo d-none">
             <div class="col">
-                <h3>Non hai inserito alcuna foto</h3>
+                <h3>La tua foto non é presente</h3>
             </div>
         </div>
         <div class="row js_photo_table d-none d-flex justify-content-center align-items-center">
@@ -59,10 +59,10 @@
 
                         if (photo.visible == true && photo.title.toLowerCase().includes(nameFilter.toLowerCase())) {
                             photoTable.innerHTML += `
-                                <div class="card">
+                                <div class="card m-2">
                                     <div class="card-image rounded"><img src="${photo.image}" alt="${photo.title}" class="rounded" style="object-fit: cover; width: 100%; height: 100%"></div>
                                         <div class="category">${photo.title}</div>
-                                        <div class="heading">${photo.description}
+                                        <div class="heading">${photo.description}</div>
                                     </div>
                                 </div>`;
 
