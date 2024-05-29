@@ -14,11 +14,8 @@ namespace net_il_mio_fotoalbum.Models
         [Required(ErrorMessage = "Il campo é richiesto")]
         [StringLength(300, ErrorMessage = "Il campo deve contenere masssimo 50 caratteri")]
         public string Description { get; set; }
-
-        [Required(ErrorMessage = "Il campo é richiesto")]
         public string Image { get; set; }
 
-        [Required(ErrorMessage = "Il campo é richiesto")]
         public bool Visible { get; set; }
 
         public List<Category>? Categories { get; set; }
